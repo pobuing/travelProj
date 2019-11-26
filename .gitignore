@@ -99,7 +99,6 @@ fabric.properties
 .idea/encodings.xml
 .idea/misc.xml
 .idea/vcs.xml
-src/
 target/apache-tomcat-maven-plugin/
 target/classes/SqlMapConfig.xml
 target/classes/jdbc.properties

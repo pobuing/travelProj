@@ -1,0 +1,29 @@
+.payfail {
+    padding: 25px;
+    margin: 20px 0;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    font-family: "微软雅黑"
+}
+
+.payfail .fail {
+    width: 500px;
+    margin: 0 auto
+}
+
+.fail h3 {
+    font-weight: 700;
+    font-size: 25px;
+    padding-bottom: 100px
+}
+
+.fail .fail-text {
+    float: left;
+    margin-left: 66px;
+    line-height: 26px;
+    font-size: 15px
+}
+
+.fail-text .button {
+    margin: 16px 0
+}
