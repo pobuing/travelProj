@@ -20,4 +20,5 @@ public class User implements Serializable {
     private String email;//邮箱
     private String pic; // 头像
 
+
 }
