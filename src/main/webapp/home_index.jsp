@@ -23,15 +23,17 @@
 
                     <div class="person-info">
                         <div class="person-photo" style="text-align: center">
-							<img src="${pageContext.request.contextPath}/${currentUser.pic}" width="180px" class="img-circle" alt="">
-						</div>
+                            <img src="${pageContext.request.contextPath}${loginUser.pic}" width="180px"
+                                 class="img-circle" alt="">
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="list-items">
                         <dl>
                             <dt><i>·</i> 设置</dt>
-                            <dd><a href="home_index.jsp" class="list-active">个人信息</a></dd>
-                            <dd><a href="home_address.jsp">地址管理</a></dd>
+                            <dd><a href="${pageContext.request.contextPath}/user?action=userInfo">个人信息</a></dd>
+                            <dd><a href="${pageContext.request.contextPath}/user?action=findAddress"
+                                   class="list-active">地址管理</a></dd>
                         </dl>
                         <dl>
                             <dt><i>·</i> 订单中心</dt>
@@ -59,7 +61,8 @@
                             <li class="active"><a href="#one" data-toggle="tab">基本资料</a></li>
                             <li><a href="#two" data-toggle="tab">头像照片</a></li>
                         </ul>
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="${pageContext.request.contextPath}/user" method="post"
+                              enctype="multipart/form-data">
                             <div class="tab-content ">
                                 <div id="one" class="tab-pane active">
                                     <div class="sui-form form-horizontal">
@@ -67,28 +70,33 @@
                                         <div class="control-group">
                                             <label for="inputName" class="control-label">昵称：</label>
                                             <div class="controls">
-                                                <input type="text" id="inputName" name="nickname" value="" placeholder="昵称">
+                                                <input type="text" id="inputName" name="nickname"
+                                                       value="${loginUser.nickname}"
+                                                       placeholder="昵称">
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">性别：</label>
                                             <div class="controls">
-
-                                                <input type="radio"  name="sex" value="1" checked /> <b>男</b>
+                                                <input type="radio" name="sex" value="1"
+                                                        <c:if test="${loginUser.sex==1}"> checked</c:if> /> <b>男</b>
                                                 &nbsp;&nbsp;
-                                                <input type="radio" name="sex" value="0"  /><b>女</b>
+                                                <input type="radio" name="sex" value="0"
+                                                        <c:if test="${loginUser.sex==0}"> checked</c:if>/><b>女</b>
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">生日：</label>
                                             <div class="controls">
-                                                <input type="text" name="birthday" value="" placeholder="生日">
+                                                <input type="text" name="birthday" value="${loginUser.birthday}"
+                                                       placeholder="生日">
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">邮箱：</label>
                                             <div class="controls">
-                                                <input type="text" name="email" value="" placeholder="邮箱">
+                                                <input type="text" name="email" value="${loginUser.email}"
+                                                       placeholder="邮箱">
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -104,8 +112,10 @@
                                     <div class="new-photo">
                                         <p>当前头像：</p>
                                         <div class="upload">
-                                            <img id="imgShow_WU_FILE_0" width="100" height="100" src="img/photo_icon.png" alt="">
-                                            <input type="file" id="up_img_WU_FILE_0" name="pic"/>
+                                            <img id="imgShow_WU_FILE_0" width="100" height="100"
+                                                 src="${pageContext.request.contextPath}${loginUser.pic}" alt="">
+                                            <input type="file" id="up_img_WU_FILE_0" value="${loginUser.pic}"
+                                                   name="pic"/>
                                         </div>
 
                                     </div>

@@ -17,4 +17,25 @@
         );
     </insert>
 
+    <select id="findByUserNameAndPassword" resultType="user">
+        SELECT * FROM tab_user WHERE username=#{username} AND password=#{password};
+    </select>
+
+    <select id="findByUid" resultType="user">
+        SELECT * FROM tab_user WHERE uid = #{uid};
+    </select>
+
+    <update id="update">
+        UPDATE tab_user
+        <set>
+            nickname=#{nickname},
+            sex=#{sex},
+            birthday=#{birthday},
+            email=#{email},
+            <if test="pic !=null and pic !=''">
+                pic=#{pic},
+            </if>
+        </set>
+        WHERE uid = #{uid};
+    </update>
 </mapper>

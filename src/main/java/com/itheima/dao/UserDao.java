@@ -1,6 +1,7 @@
 package com.itheima.dao;
 
 import com.itheima.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author wangxin
@@ -31,4 +32,15 @@ public interface UserDao {
      * @param user
      */
     void save(User user);
+
+    User findByUserNameAndPassword(@Param("username") String username, @Param("password") String password);
+
+    User findByUid(@Param("uid") int loginUserUid);
+
+    /**
+     * 更新用户
+     *
+     * @param user
+     */
+    void update(User user);
 }

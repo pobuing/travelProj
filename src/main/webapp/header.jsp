@@ -6,7 +6,53 @@
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/getParameter.js"></script>
-
+<script>
+    $(function () {
+        //用户名密码登录
+        $("#pwdLogin").click(function () {
+            var url = "${pageContext.request.contextPath}/user";
+            var params = {
+                "action": "pwdLogin", "username": $("#login_username").val(),
+                "password": $("#login_password").val()
+            };
+            $.post(url, params, function (data) {
+                if (data.code == 0) {
+                    //表示登录成功 刷新
+                    location.reload();
+                } else {
+                    $("#loginErrorMsg").html(data.message);
+                }
+            }, "json");
+        });
+        //获取短信验证码
+        $("#login_sendSmsCode").click(function () {
+            var url = "${pageContext.request.contextPath}/user";
+            var params = {
+                "action": "sendSmsCode",
+                "telephone": $("#telephone").val()
+            };
+            $.post(url, params, function (data) {
+                alert(data.message);
+            }, "json");
+        });
+        //短信验证码登录
+        $("#login_sendSmsCode").click(function () {
+            var url = "${pageContext.request.contextPath}/user";
+            var params = {
+                "action": "telLogin",
+                "telephone": $("#telephone").val(),
+                "smsCode": $("#login_check").val()
+            };
+            $.post(url, params, function (data) {
+                if (data.code == 0) {
+                    location.reload();
+                } else {
+                    $("#loginErrorMsg").html(data.message);
+                }
+            }, "json");
+        });
+    })
+</script>
 <!-- 头部 start -->
 <header id="header">
     <%--广告--%>
@@ -15,18 +61,26 @@
     </div>
     <%--右侧按钮--%>
     <div class="shortcut">
-        <!-- 未登录状态 -->
-		<div class="login_out">
-			<a id="loginBtn" data-toggle="modal" data-target="#loginModel" style="cursor: pointer;">登录</a>
-			<a href="register.jsp" style="cursor: pointer;">注册</a>
-		</div>
-        <!-- 登录状态 -->
-		<div class="login">
-			<span>欢迎回来，${currentUser.username}</span>
-			<a href="home_index.jsp" class="collection">个人中心</a>
-			<a href="cart.jsp" class="collection">购物车</a>
-			<a href="index.jsp">退出</a>
-		</div>
+        <c:if test="${loginUser==null}">
+
+            <!-- 未登录状态 -->
+            <div class="login_out">
+                <a id="loginBtn" data-toggle="modal" data-target="#loginModel" style="cursor: pointer;">登录</a>
+                <a href="register.jsp" style="cursor: pointer;">注册</a>
+            </div>
+        </c:if>
+        <c:if test="${loginUser!=null}">
+
+
+            <!-- 登录状态 -->
+            <div class="login">
+                <span>欢迎回来，${loginUser.username}</span>
+                <a href="${pageContext.request.contextPath}/user?action=userInfo" class="collection">个人中心</a>
+                <a href="cart.jsp" class="collection">购物车</a>
+                <a href="${pageContext.request.contextPath}/user?action=logout">退出</a>
+            </div>
+        </c:if>
+
     </div>
     <%--搜索框--%>
     <div class="header_wrap">

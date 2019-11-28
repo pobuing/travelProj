@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,15 +22,17 @@
                 <div class="yui3-u-1-6 list">
                     <div class="person-info">
                         <div class="person-photo" style="text-align: center">
-                            <img src="${pageContext.request.contextPath}/${currentUser.pic}" width="180px" class="img-circle" alt="">
+                            <img src="${pageContext.request.contextPath}/${loginUser.pic}" width="180px"
+                                 class="img-circle" alt="">
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="list-items">
                         <dl>
                             <dt><i>·</i> 设置</dt>
-                            <dd><a href="home_index.jsp">个人信息</a></dd>
-                            <dd><a href="home_address.jsp" class="list-active">地址管理</a></dd>
+                            <dd><a href="${pageContext.request.contextPath}/user?action=userInfo">个人信息</a></dd>
+                            <dd><a href="${pageContext.request.contextPath}/user?action=findAddress"
+                                   class="list-active">地址管理</a></dd>
                         </dl>
                         <dl>
                             <dt><i>·</i> 订单中心</dt>
@@ -55,7 +58,8 @@
                     <div class="body userAddress">
                         <div class="address-title">
                             <span class="title">地址管理</span>
-                            <a data-toggle="modal" data-target="#addressModel" data-keyboard="false"   class="sui-btn  btn-info add-new">添加新地址</a>
+                            <a data-toggle="modal" data-target="#addressModel" data-keyboard="false"
+                               class="sui-btn  btn-info add-new">添加新地址</a>
                             <span class="clearfix"></span>
                         </div>
                         <div class="address-detail">
@@ -69,37 +73,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>刘田田</td>
-                                    <td>北京 北京市 海淀区 上地街道东北旺西路8号中关村软件园9号楼</td>
-                                    <td>12345678901</td>
-                                    <td>
-                                        <a href="#">编辑</a>
-                                        <a href="#">删除</a>
-                                        <a href="#">设为默认</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>沈沉</td>
-                                    <td>北京 北京市 海淀区 上地街道东北旺西路8号中关村软件园9号楼</td>
-                                    <td>12345678901</td>
-                                    <td>
-                                        <a href="#">编辑</a>
-                                        <a href="#">删除</a>
-                                        <a href="#">设为默认</a>
-                                    </td>
-                                </tr>
+                                <c:forEach items="${addressList}" var="address">
+
+                                    <tr>
+                                        <td>${address.contact}</td>
+                                        <td>${address.address}</td>
+                                        <td>${address.telephone}</td>
+                                        <td>
+                                            <a href="#">编辑</a>
+                                            <a href="#">删除</a>
+                                            <a href="#">设为默认</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+
                                 </tbody>
                             </table>
                         </div>
 
                         <!-- 地址模态框 -->
-                        <div class="modal fade" id="addressModel" tabindex="-1" role="dialog" aria-labelledby="loginModelLable">
+                        <div class="modal fade" id="addressModel" tabindex="-1" role="dialog"
+                             aria-labelledby="loginModelLable">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="tab-pane fade in active" id="pwdReg">
-                                        <form action="${pageContext.request.contextPath}/address" method="post">
-                                            <input type="hidden" name="action" value="save">
+                                        <form action="${pageContext.request.contextPath}/user" method="post">
+                                            <input type="hidden" name="action" value="addAddress">
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label>联系人</label>

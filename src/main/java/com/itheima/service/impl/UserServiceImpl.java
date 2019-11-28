@@ -1,10 +1,11 @@
-package com.itheima.service;
+package com.itheima.service.impl;
 
 import com.itheima.dao.UserDao;
 import com.itheima.domain.User;
+import com.itheima.service.IUserService;
+import com.itheima.utils.MD5Util;
 import com.itheima.utils.MyBatisUtil;
 import com.itheima.utils.ResultInfo;
-import com.itheima.utils.SmsUtil;
 
 import java.util.Random;
 
@@ -14,14 +15,16 @@ import java.util.Random;
  * @description: TODO
  * GOOD LUCK！
  */
-public class UserService {
+public class UserServiceImpl implements IUserService {
     UserDao userDao = MyBatisUtil.openSession().getMapper(UserDao.class);
+
     /**
      * 用户注册
      *
      * @param user 用户user
      * @return
      */
+    @Override
     public ResultInfo register(User user) {
         //查询user
         User byUserName = userDao.findByUserName(user.getUsername());
@@ -44,6 +47,8 @@ public class UserService {
      * @param username 需要查询的用户名
      * @return
      */
+    @Override
+
     public boolean isExistByUsername(String username) {
         User byUserName = userDao.findByUserName(username);
 
@@ -55,6 +60,8 @@ public class UserService {
      *
      * @param telephone
      */
+    @Override
+
     public String sendSmsCode(String telephone) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 6; i++) {
@@ -72,8 +79,45 @@ public class UserService {
         return code;
     }
 
+    @Override
     public boolean isExistByUserTelephone(String telephone) {
         User existByUserTelephone = userDao.findUserByTelephone(telephone);
-        return existByUserTelephone!=null;
+        return existByUserTelephone != null;
+    }
+
+    /**
+     * 账号密码登录
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public User pwdLogin(String username, String password) {
+        //密码价目
+        String encodeByMd5 = MD5Util.encodeByMd5(password);
+        return userDao.findByUserNameAndPassword(username, password);
+    }
+
+    @Override
+    public User findByTelephone(String telephone) {
+        return userDao.findUserByTelephone(telephone);
+    }
+
+    /**
+     * 通过uid查询user
+     *
+     * @param loginUserUid
+     * @return
+     */
+    @Override
+    public User findByUid(int loginUserUid) {
+
+        return userDao.findByUid(loginUserUid);
+    }
+
+    @Override
+    public void updateInfo(User user) {
+        userDao.update(user);
     }
 }
