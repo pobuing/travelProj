@@ -136,7 +136,7 @@ public class UserServlet extends BaseServlet {
             req.getSession().setAttribute(telephone, smsCode);
             resultInfo = new ResultInfo(0, "发送短信成功");
         } else {
-            resultInfo = new ResultInfo(0, "发送短信成功");
+            resultInfo = new ResultInfo(0, "发送短信失败，请重试");
         }
         //写回数据
         writeJson2front(resp, resultInfo);
@@ -206,7 +206,7 @@ public class UserServlet extends BaseServlet {
         request.getSession().removeAttribute("loginUser");
         //重定向到首页
         try {
-            resp.sendRedirect(request.getContextPath() + "index.jsp");
+            resp.sendRedirect(request.getContextPath() + "/index.jsp");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -343,5 +343,20 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
     }
+
+    //删除用户地址
+    private void delAddressById(HttpServletRequest req, HttpServletResponse resp) {
+        //获取address id
+        String addressId = req.getParameter("addressId");
+        //调用service删除address
+        addressService.delAddressById(addressId);
+        //重定向回用户页面
+        try {
+            resp.sendRedirect(req.getContextPath() + "/user?action=findAddress");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

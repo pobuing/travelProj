@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="css/webbase.css">
     <link rel="stylesheet" href="css/pages-seckillOrder.css">
     <title>地址管理</title>
+    <script>
 
+    </script>
 </head>
 <body>
 <!--引入头部-->
@@ -81,7 +83,7 @@
                                         <td>${address.telephone}</td>
                                         <td>
                                             <a href="#">编辑</a>
-                                            <a href="#">删除</a>
+                                            <a href="${pageContext.request.contextPath}/user?action=delAddressById&addressId=${address.aid}">删除</a>
                                             <a href="#">设为默认</a>
                                         </td>
                                     </tr>

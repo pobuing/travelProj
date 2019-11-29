@@ -6,6 +6,7 @@ import com.itheima.service.IUserService;
 import com.itheima.utils.MD5Util;
 import com.itheima.utils.MyBatisUtil;
 import com.itheima.utils.ResultInfo;
+import com.itheima.utils.SmsUtil;
 
 import java.util.Random;
 
@@ -71,7 +72,7 @@ public class UserServiceImpl implements IUserService {
         //调用工具生成验证码
         String code = sb.toString();
         try {
-//            SmsUtil.sendSms(telephone, code);
+            SmsUtil.sendSms(telephone, code);
         } catch (Exception e) {
             e.printStackTrace();
             code = "";

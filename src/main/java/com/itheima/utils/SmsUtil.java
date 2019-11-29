@@ -31,7 +31,7 @@ public class SmsUtil {
      * @param code         验证码
      */
     public static void sendSms(String phoneNumbers, String code) {
-        sendSms(phoneNumbers, "黑马旅游网", "SMS_170836451", "{\"code\":\"" + code + "\"}");
+        sendSms(phoneNumbers, "黑马旅游网", "SMS_178761752", "{\"code\":\"" + code + "\"}");
     }
 
     /**
@@ -68,7 +68,7 @@ public class SmsUtil {
             //request.setSmsUpExtendCode("90997");
 
             //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
-            request.setOutId("yourOutId");
+//            request.setOutId("yourOutId");
 
             //hint 此处可能会抛出异常，注意catch
             SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);

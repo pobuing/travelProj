@@ -15,4 +15,5 @@ public interface IAddressService {
 
     void save(Address address);
 
+    void delAddressById(String addressId);
 }

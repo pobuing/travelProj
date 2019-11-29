@@ -8,4 +8,7 @@
     <insert id="save">
         INSERT INTO tab_address VALUES(NULL ,#{uid},#{contact},#{address},#{telephone},'0');
     </insert>
+    <update id="updateAddressIdNull">
+        UPDATE tab_address SET uid=NULL WHERE aid=#{addressId}
+    </update>
 </mapper>

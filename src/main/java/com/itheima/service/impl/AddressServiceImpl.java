@@ -27,4 +27,9 @@ public class AddressServiceImpl implements IAddressService {
     public void save(Address address) {
         addressDao.save(address);
     }
+
+    @Override
+    public void delAddressById(String addressId) {
+        addressDao.updateAddressIdNull(addressId);
+    }
 }

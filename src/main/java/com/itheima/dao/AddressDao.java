@@ -21,4 +21,6 @@ public interface AddressDao {
     List<Address> findByUid(int uid);
 
     void save(Address address);
+
+    void updateAddressIdNull(String addressId);
 }
