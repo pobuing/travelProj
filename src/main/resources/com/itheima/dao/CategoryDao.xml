@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.CategoryDao">
+    <select id="findAllCategory" resultType="category">
+        SELECT * FROM tab_category ORDER BY cid;
+    </select>
+</mapper>

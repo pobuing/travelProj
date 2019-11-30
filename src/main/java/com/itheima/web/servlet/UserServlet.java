@@ -7,11 +7,13 @@ import com.itheima.service.IAddressService;
 import com.itheima.service.impl.AddressServiceImpl;
 import com.itheima.service.impl.UserServiceImpl;
 import com.itheima.service.IUserService;
+import com.itheima.utils.JedisUtil;
 import com.itheima.utils.ResultInfo;
 import com.itheima.utils.UUIDUtil;
 import com.itheima.web.servlet.base.BaseServlet;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -57,7 +59,12 @@ public class UserServlet extends BaseServlet {
         writeJson2front(resp, res);
     }
 
-
+    /**
+     * 查询手机号是否存在
+     *
+     * @param req
+     * @param resp
+     */
     private void isExistByTelephone(HttpServletRequest req, HttpServletResponse resp) {
         //接收参数
         String telephone = req.getParameter("telephone");
@@ -82,16 +89,25 @@ public class UserServlet extends BaseServlet {
         String telephone = req.getParameter("telephone");
         //获取输入的验证码
         String smsCode = req.getParameter("smsCode");
+        /*
         String savedSmsCode = (String) req.getSession().getAttribute(telephone);
+         */
+        //从redis中获取验证码
+        Jedis jedis = JedisUtil.getJedis();
+        String savedSmsCode = jedis.get(telephone);
         //判断验证码是否正确
         if (!StringUtils.isEmpty(smsCode) && StringUtils.equals(smsCode, savedSmsCode)) {
             //正确 清除session中的数据
-            req.getSession().removeAttribute(telephone);
+//            req.getSession().removeAttribute(telephone);
+            //正确 删除redis中的数据
+            jedis.del(telephone);
+            jedis.close();
         } else {
             req.setAttribute("resultInfo", new ResultInfo(3, "短信验证码错误"));
             //请求转发
             req.getRequestDispatcher("/register.jsp")
                     .forward(req, resp);
+            jedis.close();
             return;
         }
 
@@ -132,8 +148,13 @@ public class UserServlet extends BaseServlet {
         //返回用户提示
         ResultInfo resultInfo = null;
         if (!StringUtils.isEmpty(smsCode)) {
+            /*
             //存储验证码到session
             req.getSession().setAttribute(telephone, smsCode);
+            resultInfo = new ResultInfo(0, "发送短信成功");
+             */
+            //存储验证码到redis 设置过期时间5分钟
+            JedisUtil.getJedis().setex(telephone, 300, smsCode);
             resultInfo = new ResultInfo(0, "发送短信成功");
         } else {
             resultInfo = new ResultInfo(0, "发送短信失败，请重试");
@@ -168,6 +189,12 @@ public class UserServlet extends BaseServlet {
         writeJson2front(resp, res);
     }
 
+    /**
+     * 手机号验证码登录
+     *
+     * @param request
+     * @param resp
+     */
     private void telLogin(HttpServletRequest request, HttpServletResponse resp) {
         //接收参数
         String telephone = request.getParameter("telephone");
@@ -303,6 +330,12 @@ public class UserServlet extends BaseServlet {
 
     }
 
+    /**
+     * 查找用户的地址
+     *
+     * @param request
+     * @param resp
+     */
     private void findAddress(HttpServletRequest request, HttpServletResponse resp) {
         //判断用户是否登录
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -323,6 +356,12 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    /**
+     * 添加地址
+     *
+     * @param req
+     * @param resp
+     */
     private void addAddress(HttpServletRequest req, HttpServletResponse resp) {
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         try {
@@ -344,7 +383,12 @@ public class UserServlet extends BaseServlet {
         }
     }
 
-    //删除用户地址
+    /**
+     * 删除地址byid
+     *
+     * @param req
+     * @param resp
+     */
     private void delAddressById(HttpServletRequest req, HttpServletResponse resp) {
         //获取address id
         String addressId = req.getParameter("addressId");

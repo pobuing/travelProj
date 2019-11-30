@@ -51,6 +51,20 @@
                 }
             }, "json");
         });
+
+        //    页面加载完成后加载导航栏
+        let url = "${pageContext.request.contextPath}/category";
+        let params = {"action": "findAllCategory"};
+        $.post(url, params, function (data) {
+            if (data.code == 0) {
+                let v = "";
+                for (let e of data.data) {
+                    v += "<li><a href = 'route_list.jsp' >" + e.cname + "</a></li>";
+                }
+                $("#shouye").after(v);
+            }
+        }, "json");
+
     })
 </script>
 <!-- 头部 start -->
@@ -109,16 +123,7 @@
 <!-- 首页导航 -->
 <div class="navitem">
     <ul class="nav" id="categoryUI">
-        <li class="nav-active"><a href="index.jsp">首页</a></li>
-        <li><a href="route_list.jsp">周边游</a></li>
-        <li><a href="route_list.jsp">山水游</a></li>
-        <li><a href="route_list.jsp">古镇游</a></li>
-        <li><a href="route_list.jsp">出境游</a></li>
-        <li><a href="route_list.jsp">国内游</a></li>
-        <li><a href="route_list.jsp">港澳游</a></li>
-        <li><a href="route_list.jsp">台湾游</a></li>
-        <li><a href="route_list.jsp">5A景点游</a></li>
-        <li><a href="route_list.jsp">全球自由行</a></li>
+        <li class="nav-active" id="shouye"><a href="index.jsp">首页</a></li>
     </ul>
 </div>
 <!-- 登录模态框 -->

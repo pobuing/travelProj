@@ -76,13 +76,12 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${addressList}" var="address">
-
                                     <tr>
                                         <td>${address.contact}</td>
                                         <td>${address.address}</td>
                                         <td>${address.telephone}</td>
                                         <td>
-                                            <a href="#">编辑</a>
+                                            <a href="javascript:void(0)" onclick="editAddress(this)">编辑</a>
                                             <a href="${pageContext.request.contextPath}/user?action=delAddressById&addressId=${address.aid}">删除</a>
                                             <a href="#">设为默认</a>
                                         </td>
