@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface CategoryDao {
     List<Category> findAllCategory();
+
+    String findCnameByCid(Integer cid);
 }

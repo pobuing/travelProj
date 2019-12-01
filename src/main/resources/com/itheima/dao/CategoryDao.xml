@@ -4,4 +4,9 @@
     <select id="findAllCategory" resultType="category">
         SELECT * FROM tab_category ORDER BY cid;
     </select>
+
+    <!--    通过cid查询cname-->
+    <select id="findCnameByCid" resultType="String">
+        SELECT cname FROM tab_category WHERE cid=#{cid};
+    </select>
 </mapper>

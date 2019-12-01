@@ -58,14 +58,21 @@
         $.post(url, params, function (data) {
             if (data.code == 0) {
                 let v = "";
+                let liEle = "";
                 for (let e of data.data) {
-                    v += "<li><a href = 'route_list.jsp' >" + e.cname + "</a></li>";
+                    liEle = "<li class='nav-noactive'><a href = '${pageContext.request.contextPath}/route?action=findRoutByPage&cid=" + e.cid + "&currentPage=1&pageSize=10' >" + e.cname + "</a></li>";
+                    v += liEle;
                 }
                 $("#shouye").after(v);
             }
         }, "json");
 
-    })
+    });
+
+    function searchClick() {
+        location.href = "${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=1&pageSize=10&rname=" + $("#rname").val();
+
+    }
 </script>
 <!-- 头部 start -->
 <header id="header">
@@ -123,6 +130,7 @@
 <!-- 首页导航 -->
 <div class="navitem">
     <ul class="nav" id="categoryUI">
+        <%--            <li class="nav-active" id="shouye"><a href="index.jsp">首页</a></li>--%>
         <li class="nav-active" id="shouye"><a href="index.jsp">首页</a></li>
     </ul>
 </div>

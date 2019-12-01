@@ -148,6 +148,7 @@
                 <version>2.2</version>
                 <configuration>
                     <port>8880</port>
+                    <uriEncoding>utf8</uriEncoding>
                 </configuration>
             </plugin>
         </plugins>
