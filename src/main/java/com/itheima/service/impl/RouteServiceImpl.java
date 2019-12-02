@@ -42,6 +42,11 @@ public class RouteServiceImpl implements IRouteService {
     }
 
     @Override
+    public Route findRouteDetail(Integer rid) {
+        return routeDao.findRouteByRid(rid);
+    }
+
+    @Override
     public String findCnameByCid(Integer cid) {
         return categoryDao.findCnameByCid(cid);
     }

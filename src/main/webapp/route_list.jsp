@@ -43,7 +43,9 @@
                                     <span>${route.price}</span>
                                     <span>起</span>
                                 </p>
-                                <p><a href="route_detail.jsp">查看详情</a></p>
+                                <p>
+                                    <a href="${pageContext.request.contextPath}/route?action=findRouteDetail&rid=${route.rid}">查看详情</a>
+                                </p>
                             </div>
                         </li>
                     </c:forEach>
@@ -57,12 +59,12 @@
                 <div class="pageNum">
                     <ul>
                         <li>
-                            <a href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=1&pageSize=10">首页</a>
+                            <a href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=1&pageSize=10&rname=${rname}">首页</a>
                         </li>
                         <c:if test="${pb.currentPage>1}">
 
                             <li class="threeword"><a
-                                    href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.currentPage-1}&pageSize=10">上一页</a>
+                                    href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.currentPage-1}&pageSize=10&rname=${rname}">上一页</a>
                             </li>
                         </c:if>
 
@@ -70,23 +72,25 @@
                             <c:if test="${pb.currentPage == page}">
                                 <%--判断是否是当前页--%>
                                 <li class="curPage">
-                                    <a href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${page}&pageSize=10">${page}</a>
+
+                                    <a href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=1&pageSize=10&rname=${rname}">${page}</a>
                                 </li>
                             </c:if>
                             <c:if test="${pb.currentPage != page}">
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${page}&pageSize=10">${page}</a>
+                                    <a href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.currentPage+1}&pageSize=10&rname=${rname}">${page}</a>
                                 </li>
                             </c:if>
                         </c:forEach>
                         <c:if test="${pb.currentPage<pb.totalPage}">
 
                             <li class="threeword"><a
-                                    href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.currentPage+1}&pageSize=10">下一页</a>
+
+                                    href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.currentPage+1}&pageSize=10&rname=${rname}">下一页</a>
                             </li>
                         </c:if>
                         <li class="threeword"><a
-                                href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.totalPage}&pageSize=10">末页</a>
+                                href="${pageContext.request.contextPath}/route?action=findRoutByPage&cid=${cid}&currentPage=${pb.totalPage}&pageSize=10&rname=${rname}">末页</a>
                         </li>
                     </ul>
                 </div>

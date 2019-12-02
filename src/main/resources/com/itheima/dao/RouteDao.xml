@@ -8,7 +8,7 @@
                 AND cid=#{cid}
             </if>
             <if test="rname!=null and rname!=''">
-                AND rname LIKE CONCAT('%',#{rname},'%');
+                AND rname LIKE CONCAT('%',#{rname},'%')
             </if>
 
         </where>
@@ -16,9 +16,37 @@
     <!--    查询分页数据-->
     <select id="findRouteByPage" resultType="route">
         SELECT * FROM tab_route
-            WHERE cid = #{cid}
-            LIMIT #{startIndex},#{pageSize}
-    </select>
+        <where>
+            <if test="cid!=null">
+                AND cid=#{cid}
+            </if>
+            <if test="rname!=null and rname!=''">
+                AND rname LIKE CONCAT('%',#{rname},'%')
+            </if>
 
+        </where>
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+    <resultMap id="routeMap" type="route">
+        <association property="category" column="cid" select="findCategoryByCid"></association>
+        <association property="seller" column="sid" select="findSellerBySid"></association>
+        <collection property="routeImgList" column="rid" select="findRouteImgsByRid"></collection>
+    </resultMap>
+    <!--    通过rid查询route详情-->
+    <select id="findRouteByRid" resultMap="routeMap">
+        SELECT * FROM tab_route WHERE rid=#{rid}
+    </select>
+    <!--    通过cid查询分类-->
+    <select id="findCategoryByCid" resultType="category">
+        SELECT * FROM  tab_category WHERE cid=#{cid}
+    </select>
+    <!--    通过rid查询图片列表-->
+    <select id="findRouteImgsByRid" resultType="routeImg">
+        SELECT * FROM tab_route_img WHERE rid=#{rid}
+    </select>
+    <!--    根据sid查询商家-->
+    <select id="findSellerBySid" resultType="seller">
+        SELECT * FROM tab_seller WHERE sid=#{sid}
+    </select>
 
 </mapper>

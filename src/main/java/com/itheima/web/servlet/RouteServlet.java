@@ -38,21 +38,20 @@ public class RouteServlet extends BaseServlet {
         if (StringUtils.isEmpty(pageSizeStr)) {
             pageSizeStr = "10";
         }
-        //String ---> integer
-        Integer cid = Integer.valueOf(cidStr);
+        Integer cid = null;
+        if (StringUtils.isNotEmpty(cidStr)) {
+            //String ---> integer
+            cid = Integer.valueOf(cidStr);
+
+        }
         Integer currentPage = Integer.valueOf(currentPageStr);
         Integer pageSize = Integer.valueOf(pageSizeStr);
         //调用service查询
         PageBean<Route> pageBean = routerService.findRouteByPage(cid, currentPage, pageSize, rname);
         //查询cname
-        String cname = routerService.findCnameByCid(cid);
-        if (StringUtils.isEmpty(cname)) {
-            cname = "首页";
-        }
+
         req.setAttribute("pb", pageBean);
         req.setAttribute("cid", cid);
-        req.setAttribute("cname", cname);
-
         req.setAttribute("rname", rname);
         //页面转发
         try {
@@ -61,5 +60,27 @@ public class RouteServlet extends BaseServlet {
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 查询路线详情
+     *
+     * @param req
+     * @param resp
+     */
+    private void findRouteDetail(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+        //接收参数
+        String ridStr = req.getParameter("rid");
+        int rid = Integer.parseInt(ridStr);
+        //调用service查询
+        Route route = routerService.findRouteDetail(rid);
+        //请求转发
+        req.setAttribute("route", route);
+            req.getRequestDispatcher("/route_detail.jsp").forward(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

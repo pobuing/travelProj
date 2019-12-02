@@ -35,4 +35,10 @@ public interface RouteDao {
                                 @Param("pageSize") Integer pageSize,
                                 @Param("rname") String rname);
 
+    /**
+     * 通过rin查询route详情
+     * @param rid
+     * @return
+     */
+    Route findRouteByRid(Integer rid);
 }

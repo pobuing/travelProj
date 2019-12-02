@@ -16,4 +16,6 @@ public interface IRouteService {
     PageBean<Route> findRouteByPage(Integer cid, Integer currentPage, Integer pageSize, String rname);
 
     String findCnameByCid(Integer cid);
+
+    Route findRouteDetail(Integer rid);
 }
