@@ -36,8 +36,8 @@ import java.util.Map;
 //支持文件上传
 @MultipartConfig
 public class UserServlet extends BaseServlet {
-    IUserService userServiceImpl = (UserServiceImpl) BeanFactory.getBean("userService");
-    IAddressService addressService = (AddressServiceImpl) BeanFactory.getBean("addressService");
+    IUserService userServiceImpl = (IUserService) BeanFactory.getBean("userService");
+    IAddressService addressService = (IAddressService) BeanFactory.getBean("addressService");
 
     /**
      * 验证用户是否已经存在

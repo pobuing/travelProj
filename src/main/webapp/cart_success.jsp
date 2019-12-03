@@ -26,21 +26,21 @@
             <tr class="table-bordered">
                 <td width="180" width="40%">
                     <input type="hidden" name="id" value="22">
-                    <img src="images/04-search_03.jpg" width="170" height="100">
+                    <img src="${cartItem.route.rimage}" width="170" height="100">
                 </td>
                 <td width="30%">
-                    <a target="_blank">海南游</a>
+                    <a target="_blank">${cartItem.route.rname}</a>
                 </td>
                 <td width="10%">
-                    ￥1000
+                    ￥${cartItem.route.price}
                 </td>
                 <td width="14%">
-                    ×3
+                    ×${cartItem.num}
                 </td>
                 <td width="15%">
-                    <span class="subtotal">￥3000</span>
+                    <span class="subtotal">￥${cartItem.price}</span>
                 </td>
-            </tr >
+            </tr>
 
             </tbody>
         </table>

@@ -18,4 +18,12 @@ public interface IRouteService {
     String findCnameByCid(Integer cid);
 
     Route findRouteDetail(Integer rid);
+
+    /**
+     * 根据rid查询route
+     *
+     * @param rid
+     * @return
+     */
+    Route findRouteByRid(String rid);
 }

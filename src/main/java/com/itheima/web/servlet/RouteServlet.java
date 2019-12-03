@@ -23,7 +23,7 @@ import java.util.List;
  */
 @WebServlet("/route")
 public class RouteServlet extends BaseServlet {
-    IRouteService routerService = (IRouteService) BeanFactory.getBean("routerService");
+    IRouteService routerService = (IRouteService) BeanFactory.getBean("routeService");
 
     private void findRoutByPage(HttpServletRequest req, HttpServletResponse resp) {
         //获取参数
@@ -70,13 +70,13 @@ public class RouteServlet extends BaseServlet {
      */
     private void findRouteDetail(HttpServletRequest req, HttpServletResponse resp) {
         try {
-        //接收参数
-        String ridStr = req.getParameter("rid");
-        int rid = Integer.parseInt(ridStr);
-        //调用service查询
-        Route route = routerService.findRouteDetail(rid);
-        //请求转发
-        req.setAttribute("route", route);
+            //接收参数
+            String ridStr = req.getParameter("rid");
+            int rid = Integer.parseInt(ridStr);
+            //调用service查询
+            Route route = routerService.findRouteDetail(rid);
+            //请求转发
+            req.setAttribute("route", route);
             req.getRequestDispatcher("/route_detail.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
             e.printStackTrace();

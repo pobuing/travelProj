@@ -6,14 +6,24 @@
     <title>路线详情</title>
     <link rel="stylesheet" type="text/css" href="css/route-detail.css">
 </head>
-<script>
-    $(function () {
-        console.log(${route});
-    })
-</script>
+
 <body>
 <!--引入头部-->
 <jsp:include page="header.jsp"></jsp:include>
+<script>
+    $(function () {
+        console.log(${route.rid})
+        $("#addCart").click(function () {
+            if (${loginUser == null}) {
+                //未登录
+                $("#loginBtn").click();
+            } else {
+                //已经登录
+                window.location.href = "cart?action=addCart&rid=${route.rid}&num=" + $("#qty_item_1").val();
+            }
+        })
+    })
+</script>
 <!-- 详情 start -->
 <div class="wrap">
     <div class="bread_box">
@@ -65,7 +75,7 @@
                         <a class="add" onClick="setAmount.add('#qty_item_1')" href="javascript:void(0)">+</a>
                     </div>
                     <span class="collect">
-                         <a class="btn" href="cart_success.jsp" id="addCart"><i
+                         <a class="btn" id="addCart"><i
                                  class="glyphicon glyphicon-heart-empty"></i>加入购物车</a>
                     </span>
                 </div>

@@ -39,30 +39,34 @@
                     </div>
                     <div class="step-cont">
                         <ul class="send-detail">
-                            <li>
+                            <c:forEach items="${cart.cartItems}" var="entry">
+                                <c:set var="cartItem" value="${entry.value}"/>
+                                <li>
 
-                                <div class="sendGoods">
+                                    <div class="sendGoods">
 
-                                    <ul class="yui3-g">
-                                        <li class="yui3-u-1-6">
-                                            <span><img src="images/04-search_03.jpg"/></span>
-                                        </li>
-                                        <li class="yui3-u-7-12" style="padding-left: 10px">
-                                            <div class="desc">【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</div>
-                                            <div class="seven">7天无理由退货</div>
-                                        </li>
-                                        <li class="yui3-u-1-12">
-                                            <div class="price">￥5399.00</div>
-                                        </li>
-                                        <li class="yui3-u-1-12">
-                                            <div class="num">X1</div>
-                                        </li>
-                                        <li class="yui3-u-1-12">
-                                            <div class="exit">有货</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                                        <ul class="yui3-g">
+                                            <li class="yui3-u-1-6">
+                                                <span><img src="${cartItem.route.rimage}"/></span>
+                                            </li>
+                                            <li class="yui3-u-7-12" style="padding-left: 10px">
+                                                <div class="desc">${cartItem.route.rname}</div>
+                                                <div class="seven">7天无理由退货</div>
+                                            </li>
+                                            <li class="yui3-u-1-12">
+                                                <div class="price">￥${cartItem.route.price}</div>
+                                            </li>
+                                            <li class="yui3-u-1-12">
+                                                <div class="num">X${cartItem.num}</div>
+                                            </li>
+                                            <li class="yui3-u-1-12">
+                                                <div class="exit">有货</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </c:forEach>
+
                             <li></li>
                             <li></li>
                         </ul>
@@ -71,10 +75,10 @@
             </div>
         </div>
         <div class="clearfix trade">
-            <div class="fc-price">应付金额:　<span class="price">¥5399.00</span></div>
+            <div class="fc-price">应付金额:　<span class="price">¥${cart.cartPrice}</span></div>
         </div>
         <div class="submit">
-            <a class="sui-btn btn-danger btn-xlarge" href="pay.jsp">提交订单</a>
+            <a class="sui-btn btn-danger btn-xlarge" href="${pageContext.request.contextPath}/order?action=createOrder">提交订单</a>
         </div>
     </div>
 </div>

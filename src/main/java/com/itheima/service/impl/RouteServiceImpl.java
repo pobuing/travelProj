@@ -24,7 +24,7 @@ public class RouteServiceImpl implements IRouteService {
     public PageBean<Route> findRouteByPage(Integer cid, Integer currentPage, Integer pageSize, String rname) {
         //封装pageBean
         //查询总记录数
-        int totalCount = routeDao.findCount(cid,rname);
+        int totalCount = routeDao.findCount(cid, rname);
         int totalPage = (totalCount % pageSize == 0) ? (totalCount / pageSize) : (totalCount / pageSize + 1);
         //计算startIndex
         int startIndex = (currentPage - 1) * pageSize;
@@ -42,12 +42,20 @@ public class RouteServiceImpl implements IRouteService {
     }
 
     @Override
+    public Route findRouteByRid(String rid) {
+
+        return routeDao.findRouteByRid(Integer.valueOf(rid));
+    }
+
+    @Override
     public Route findRouteDetail(Integer rid) {
-        return routeDao.findRouteByRid(rid);
+
+        return routeDao.findRouteDetailByRid(rid);
     }
 
     @Override
     public String findCnameByCid(Integer cid) {
+
         return categoryDao.findCnameByCid(cid);
     }
 }

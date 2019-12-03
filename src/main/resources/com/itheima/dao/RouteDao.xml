@@ -28,12 +28,13 @@
         LIMIT #{startIndex},#{pageSize}
     </select>
     <resultMap id="routeMap" type="route">
+        <result column="rid" property="rid"/>
         <association property="category" column="cid" select="findCategoryByCid"></association>
         <association property="seller" column="sid" select="findSellerBySid"></association>
         <collection property="routeImgList" column="rid" select="findRouteImgsByRid"></collection>
     </resultMap>
     <!--    通过rid查询route详情-->
-    <select id="findRouteByRid" resultMap="routeMap">
+    <select id="findRouteDetailByRid" resultMap="routeMap">
         SELECT * FROM tab_route WHERE rid=#{rid}
     </select>
     <!--    通过cid查询分类-->
@@ -48,5 +49,9 @@
     <select id="findSellerBySid" resultType="seller">
         SELECT * FROM tab_seller WHERE sid=#{sid}
     </select>
+    <select id="findRouteByRid" resultType="route">
+        SELECT * FROM tab_route WHERE rid=#{rid};
+    </select>
+
 
 </mapper>

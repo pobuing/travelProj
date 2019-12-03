@@ -40,5 +40,6 @@ public interface RouteDao {
      * @param rid
      * @return
      */
+    Route findRouteDetailByRid(Integer rid);
     Route findRouteByRid(Integer rid);
 }
