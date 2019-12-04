@@ -1,12 +1,16 @@
 package com.itheima.web.servlet;
 
+import com.github.wxpay.sdk.WXPayUtil;
 import com.itheima.domain.Cart;
 import com.itheima.domain.Order;
 import com.itheima.domain.User;
 import com.itheima.factory.BeanFactory;
 import com.itheima.service.IOrderService;
 import com.itheima.utils.CartRedisUtils;
+import com.itheima.utils.ResultInfo;
+import com.itheima.utils.WxPayUtil;
 import com.itheima.web.servlet.base.BaseServlet;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,14 +61,34 @@ public class OrderServlet extends BaseServlet {
             }
             //生成订单
             Order order = IOrderService.createOrder(loginUser.getUid());
-            System.out.println(order);
-
+            //调用WX支付
+            String codeUrl = WxPayUtil.createPay(order.getOid(), order.getTotal());
+            req.setAttribute("codeUrl", codeUrl);
+            req.setAttribute("order", order);
             //数据转发
-            resp.sendRedirect(req.getContextPath()+"/pay.jsp");
-
-        } catch (IOException e) {
+            req.getRequestDispatcher("/pay.jsp")
+                    .forward(req, resp);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 查询支付状态
+     *
+     * @param req
+     * @param resp
+     */
+    private void queryPayState(HttpServletRequest req, HttpServletResponse resp) {
+        String oid = req.getParameter("oid");
+        //查询支付状态
+        String payStatus = WxPayUtil.queryPayStatus(oid);
+        ResultInfo info = null;
+        if (StringUtils.equals(payStatus, "0")) {
+            info = new ResultInfo(0);
+        } else {
+            info = new ResultInfo(1);
+        }
+        writeJson2front(resp, info);
     }
 }
